@@ -4,6 +4,7 @@ const cheerio = require('cheerio')
 const request = require('request')
 const myProxyList = require('./userAgentList')
 const slug = require('slug')
+const { response } = require('express')
 const port = 5000;
 
 const  myUserAgents =  myProxyList.myUserAgents;
@@ -26,7 +27,7 @@ const sololearn_id  =req.params.sololearn_id
     const $ = cheerio.load(html)
     
     if(res.statusCode!= 200){
-        mainres.json({Error:"Maybe Provided Id Is Incorrect..:("});
+        mainRes.json({Error:"Maybe Provided Id Is Incorrect..:("});
         console.log('yuppp')
     } else{
 
@@ -35,9 +36,9 @@ const sololearn_id  =req.params.sololearn_id
         const user_level = parseInt($('.detail div').first().text().replace(/\n/g, '').slice(5));
         const user_tottal_xp = parseInt($('.detail div').last().text().trim().slice(0, -3));
         const user_profile_pic_url = 'https://api.sololearn.com/Uploads/Avatars/'+sololearn_id+'.jpg';
-        const user_cources_list = {};
-        const user_codes_list = {};
-        const user_certificates_list = [];
+        let user_cources_list = {};
+        let user_codes_list = [];
+        let user_certificates_list = [];
 
         $('.courseWrapper').each((index,ele)=>{
             const cource_name = $(ele).find('a').attr('title');
@@ -46,12 +47,17 @@ const sololearn_id  =req.params.sololearn_id
         })
        
         $('.codeContainer').each((index2,el)=>{
-            const code_text = slug($(el).find('.codeDetails a').text(),'_', {lower: false});
-            var code_upvotes = parseInt($(el).find('.positive').html());
+            let codeKey = slug($(el).find('.codeDetails a').text(),'_', {lower: false});
+            let code_text = $(el).find('.codeDetails a').text().trim();
+            let code_upvotes = parseInt($(el).find('.positive').html());
             if(Number.isNaN(code_upvotes)){
                 code_upvotes=0;
             }
-            user_codes_list[code_text]=code_upvotes;    
+            let codesAndUpvotesInfo = {
+                codeName: code_text,
+                codeUpvotes: code_upvotes
+            }
+            user_codes_list.push(codesAndUpvotesInfo);    
         })
         
         $('.certificate').each((index3,e)=>{
@@ -79,20 +85,22 @@ console.log(userInfo)
 })
 
 
-app.get('/codeplayground/:ordering/:lang/:page', (req, mainRes)=>{
+app.get('/codeplayground/:ordering/:lang/:page', (req, mainRes2)=>{
     let ordering = req.params.ordering
     let lang = req.params.lang
     let page = req.params.page
     if(lang == 'All'){
         lang = ""
     }
+
+    let codeplaygroundInfo =[];
     let random = Math.floor(Math.random()*myUserAgents.length);
     var customHeaderRequest = request.defaults({
         headers: {
             'User-Agent': myUserAgents[random]
           }
     })
-    try{
+    
     customHeaderRequest.get(`https://www.sololearn.com/Codes?ordering=${ordering}&query=&language=${lang}&page=${page}`, (err, res, html)=>{
         // console.log(html)
         if(err){
@@ -101,12 +109,12 @@ app.get('/codeplayground/:ordering/:lang/:page', (req, mainRes)=>{
         }else{
             
             const $ = cheerio.load(html)
-
+            
             $('.codeContainer').each((index1, ele)=>{
                 let code_key = slug($(ele).find('.nameLink').text().trim(), '_', {lower: false})
                 let code_text = $(ele).find('.nameLink').text().trim()
                 // console.log(code_text, code_key)
-                let code_upvote = parseInt($(ele).find('.positive').text().trim())
+                let code_upvotes = parseInt($(ele).find('.positive').text().trim())
                 // console.log(code_upvote)
                 let userName = $(ele).find('.userName').text().trim()
                 // console.log(userName)
@@ -116,15 +124,31 @@ app.get('/codeplayground/:ordering/:lang/:page', (req, mainRes)=>{
                 // console.log(imgLink)
                 let codeLanguage = $(ele).find('.icon').text().trim()
                 // console.log(codeLanguage)
+            
+                
+                let info = {
+                    codeInfo :{ 
+                        codeName: code_text,
+                        codeupvotes: code_upvotes,
+                        codeLanguage: codeLanguage,
+                        creationDate: codeDate
+                    },
+                    authorInfo: {
+                    username: userName,
+                    imgLink: imgLink
+                    }
+                }
+            // console.log(info)
+            codeplaygroundInfo.push(info)
+            
             })
             
-            
+            console.log(codeplaygroundInfo)    
+            mainRes2.json(codeplaygroundInfo)
         }
     })
+    
 
-}catch (err){
-    console.log(err)
-}
 })
 
 app.listen(port, ()=> console.log(`Running at port ${port}`))
