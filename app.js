@@ -7,12 +7,13 @@ const slug = require('slug')
 // const { response } = require('express')
 const codeplaygroundRoute =require('./routes/codeplaygound')
 const userInfoRoute = require('./routes/userInfo')
+const qnaInfoRoute = require('./routes/qnaInfo')
 const port = 5000;
 
 const  myUserAgents =  myProxyList.myUserAgents;
 
 app.use('/userInfo', userInfoRoute)
-
 app.use('/codeplayground', codeplaygroundRoute)
+app.use('/qnaInfo', qnaInfoRoute)
 
 app.listen(port, ()=> console.log(`Running at port ${port}`))
