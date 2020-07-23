@@ -12,6 +12,8 @@ const port = 5000;
 
 const  myUserAgents =  myProxyList.myUserAgents;
 
+app.use(express.json({limit:'1mb'}))
+
 app.use('/userInfo', userInfoRoute)
 app.use('/codeplayground', codeplaygroundRoute)
 app.use('/qnaInfo', qnaInfoRoute)

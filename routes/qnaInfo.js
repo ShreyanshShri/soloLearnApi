@@ -18,8 +18,8 @@ router.get('/:ordering/:page', (req, mainRes)=>{
 
     customHeaderRequest.get(`https://www.sololearn.com/Discuss?ordering=${ordering}&query=&page=${page}`, (err, res, html)=>{
         if(err){
-            console.log(err)
-            mainRes.status(201).json({message: 'An error Occured'}, {errCode: err})
+            console.log(err.code)
+            mainRes.status(res.statusCode).json({errCode: err})
         }else{
 
             const $ = cheerio.load(html)
@@ -36,8 +36,12 @@ router.get('/:ordering/:page', (req, mainRes)=>{
                 let userName = $(ele).find('.userName').text().trim()
                 let postedAt = $(ele).find('.date').text().trim()
                 let imgLink = $(ele).find('img').attr('src')
+                let questionId = $(ele).find('.postDetails a').attr('href').replace('/Discuss/', '').slice(0,7)     
+                
+                // console.log(questionId)
                 let thisInfo = {
                     questionInfo: {
+                        questionId: questionId,
                         question: question,
                         upvotes: likes,
                         answers: answers,
@@ -59,15 +63,79 @@ router.get('/:ordering/:page', (req, mainRes)=>{
     })
 })
 
-router.get('/thread/:slug', (req, mainRes)=>{
+router.get('/thread/id/:id', (req, mainRes)=>{
     let random = Math.floor(Math.random()*myUserAgents.length);
     var customHeaderRequest = request.defaults({
         headers: {
             'User-Agent': myUserAgents[random]
           }
     })
+    const id = req.params.id
+    let allData
+    let allAnsData = []
+    customHeaderRequest.get(`https://www.sololearn.com/Discuss/${id}/`, (err, res, html)=>{
+        
+        if(err){
+            console.log(err)
+            // if(err.code == 'ECONNRESET') mainRes.json({message: 'Couldnot process your request due to Bad Network'}, {error: err})
+        }else{
+            // console.log(html)
+            const $ = cheerio.load(html)
+// console.log('reached here')
+            const question = $('.question .header').text().trim()
+            const message = $('.question .message').text().trim()
+            const upvotes = $('.question .positive').text().trim() ||$('.question .negative').text().trim()
+            let tags = []
+            $('.postDetails .tag').each((index, ele)=>{
+                let tag = $(ele).text().trim()
+                tags.push(tag)
+            })
+            const authorName = $('.question .userName').text().trim()
+            const postedAt = $('.question .date').text().trim()
+            const authorImg = $('.question img').attr('src')
+            // console.log(question, message, upvotes, tags, authorName, authorImg, postedAt)
+            
+            //answers
+            $('.answer').each((index, ele)=>{
+                let answer = $(ele).find('.message').text().trim()
+                let upvotesOnAns = $(ele).find('.positive').text().trim() || $(ele).find('.negative').text().trim()
+                let answeredBy = $(ele).find('.userName').text().trim()
+                let ansPostedAt = $(ele).find('.date').attr('data-date')
+                let answererImg = $(ele).find('img').attr('src')
+                console.log(ansPostedAt)
+                let thisData = {
+                    answerDetails: {
+                        answer: answer,
+                        upvotes: upvotesOnAns,
+                        postedAt: ansPostedAt
+                    }, userDetails: {
+                        userName: answeredBy,
+                        userimg: answererImg
+                    }
+                }
+                // console.log(thisData)
+                allAnsData.push(thisData)
+            })
+            allData = {
+                questionInfo: {
+                    questionDetails: {
+                        question: question,
+                        message: message,
+                        upvotes: upvotes,
+                        postedAt: postedAt
+                    }, 
+                    authorDetails: {
+                        authorName: authorName,
+                        authorImg: authorImg
+                    }
+                },
+                answersInfo: allAnsData
+            }
+            console.log(allData)
+            mainRes.json(allData)
+        }
 
-    res.json({data:'data'})
+    })
 })
 
 module.exports = router
