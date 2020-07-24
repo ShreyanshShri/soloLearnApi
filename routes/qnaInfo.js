@@ -17,12 +17,16 @@ router.get('/:ordering/:page', (req, mainRes)=>{
     var allInfo = [];
 
     customHeaderRequest.get(`https://www.sololearn.com/Discuss?ordering=${ordering}&query=&page=${page}`, (err, res, html)=>{
-        if(err){
-            console.log(err.code)
-            mainRes.status(res.statusCode).json({errCode: err})
+        if(!err){
+            const $ = cheerio.load(html)
+            const check = $('.content h1').text()
+    
+        if(check=='Page Not Found' || check=='Error.'){
+            mainres.json({Error:"Maybe Provided Id Is Incorrect..:("});
+            console.log('yuppp')
         }else{
 
-            const $ = cheerio.load(html)
+            
             $('.question').each((index1, ele)=>{
                 let question = $(ele).find('.postDetails a:nth-child(1)').text().trim()
                 let tags = []
@@ -59,8 +63,11 @@ router.get('/:ordering/:page', (req, mainRes)=>{
             // console.log(allInfo)
             mainRes.json(allInfo)
         }
-
+    }else{
+        mainres.json({Error:"Maybe Provided Id Is Incorrect..:("})
+    }
     })
+
 })
 
 router.get('/thread/id/:id', (req, mainRes)=>{
@@ -75,10 +82,14 @@ router.get('/thread/id/:id', (req, mainRes)=>{
     let allAnsData = []
     customHeaderRequest.get(`https://www.sololearn.com/Discuss/${id}/`, (err, res, html)=>{
         
-        if(err){
-            console.log(err)
-            // if(err.code == 'ECONNRESET') mainRes.json({message: 'Couldnot process your request due to Bad Network'}, {error: err})
-        }else{
+        if(!err){
+            const $ = cheerio.load(html)
+            const check = $('.content h1').text()
+            if(check=='Page Not Found' || check=='Error.'){
+                mainres.json({Error:"Maybe Provided Id Is Incorrect..:("});
+                console.log('yuppp')
+            }
+        else{
             // console.log(html)
             const $ = cheerio.load(html)
 // console.log('reached here')
@@ -102,7 +113,7 @@ router.get('/thread/id/:id', (req, mainRes)=>{
                 let answeredBy = $(ele).find('.userName').text().trim()
                 let ansPostedAt = $(ele).find('.date').attr('data-date')
                 let answererImg = $(ele).find('img').attr('src')
-                console.log(ansPostedAt)
+                // console.log(ansPostedAt)
                 let thisData = {
                     answerDetails: {
                         answer: answer,
@@ -131,10 +142,12 @@ router.get('/thread/id/:id', (req, mainRes)=>{
                 },
                 answersInfo: allAnsData
             }
-            console.log(allData)
+            // console.log(allData)
             mainRes.json(allData)
         }
-
+    }else{
+        mainres.json({Error:"Maybe Provided Id Is Incorrect..:("})
+    }
     })
 })
 

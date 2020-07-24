@@ -19,13 +19,15 @@ router.get('/:sololearn_id', (req, mainRes)=>{
     })
 
     customHeaderRequest.get(`https://www.sololearn.com/Profile/${sololearn_id}`,(err,res,html)=>{
-    if(err) console.log(err)
+    if(!err) {
     const $ = cheerio.load(html)
-    
-    if(res.statusCode!= 200){
-        mainRes.json({Error:"Maybe Provided Id Is Incorrect..:("});
+
+    const check = $('.content h1').text()
+
+    if(check=='Page Not Found' || check=='Error.'){
+        mainres.json({Error:"Maybe Provided Id Is Incorrect..:("});
         console.log('yuppp')
-    } else{
+    }else{
 
         const user_name = $('.name').text().trim();
         // console.log(user_name)
@@ -72,12 +74,15 @@ router.get('/:sololearn_id', (req, mainRes)=>{
             codeUpvotesInfo: user_codes_list,
             coursesComplted: user_certificates_list 
         }
-console.log(userInfo)
+// console.log(userInfo)
+mainRes.json(userInfo)
     }
-
+}else{
+    mainres.json({Error:"Maybe Provided Id Is Incorrect..:("})
+}
 })
 
-    mainRes.json(userInfo)
+    
 })
 
 module.exports = router

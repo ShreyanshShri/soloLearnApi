@@ -25,13 +25,17 @@ router.get('/:ordering/:lang/:page', (req, mainRes2)=>{
     
     customHeaderRequest.get(`https://www.sololearn.com/Codes?ordering=${ordering}&query=&language=${lang}&page=${page}`, (err, res, html)=>{
         // console.log(html)
-        if(err){
-            mainRes.json({messsage : 'Oops We got an error...Probably sololearn server is not responding'}, {errorCode : err})
-            console.log(err)
+        if(!err){
+            const $ = cheerio.load(html)
+
+        const check = $('.content h1').text()
+    
+        if(check=='Page Not Found' || check=='Error.'){
+            mainres.json({Error:"Maybe Provided Id Is Incorrect..:("});
+            console.log('yuppp')
         }else{
             
-            const $ = cheerio.load(html)
-            
+                        
             $('.codeContainer').each((index1, ele)=>{
                 let code_key = slug($(ele).find('.nameLink').text().trim(), '_', {lower: false})
                 let code_text = $(ele).find('.nameLink').text().trim()
@@ -65,9 +69,12 @@ router.get('/:ordering/:lang/:page', (req, mainRes2)=>{
             
             })
             
-            console.log(codeplaygroundInfo)    
+            // console.log(codeplaygroundInfo)    
             mainRes2.json(codeplaygroundInfo)
         }
+    }else{
+        mainres.json({Error:"Maybe Provided Id Is Incorrect..:("})
+    }
     })
     
 
