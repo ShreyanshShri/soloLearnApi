@@ -3,7 +3,7 @@ const router = express.Router()
 const cheerio = require('cheerio')
 const request = require('request')
 const myProxyList = require('../userAgentList')
-const  myUserAgents =  myProxyList.myUserAgents;
+const myUserAgents =  myProxyList.myUserAgents;
 
 router.get('/:ordering/:page', (req, mainRes)=>{
     const ordering = req.params.ordering
@@ -40,9 +40,9 @@ router.get('/:ordering/:page', (req, mainRes)=>{
                 let userName = $(ele).find('.userName').text().trim()
                 let postedAt = $(ele).find('.date').text().trim()
                 let imgLink = $(ele).find('img').attr('src')
-                let questionId = $(ele).find('.postDetails a').attr('href').replace('/Discuss/', '').slice(0,7)     
+                let questionId = $(ele).find('.postDetails a').attr('href').replace('/Discuss/', '').slice(0,7).replace('/', '')     
                 
-                // console.log(questionId)
+                console.log(questionId)
                 let thisInfo = {
                     questionInfo: {
                         questionId: questionId,
