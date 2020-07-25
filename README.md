@@ -11,7 +11,7 @@ A SoloLearn API
 
 ## How to get info about a user
 
-Make a get request on localhost:5000/userInfo/{sololearn_id} (for now...I will change it after deploying to heroku)\
+Make a get request on https://sololearn-api.herokuapp.com/userInfo/{sololearn_id}\
 It will return data in json format...something like this
 
 ```
@@ -32,7 +32,7 @@ Now you can iterate through each of the objects of the array and get data.
 
 ## How to get data of code playground 
 
-Make a get request to localhost:5000/codeplayground/{ordering}/{language}/{page}\
+Make a get request to https://sololearn-api.herokuapp.com/codeplayground/{ordering}/{language}/{page}\
 Ordering accepts 
 * Trending 
 * MostRecent
@@ -60,7 +60,7 @@ Again you can iterate through each of the code objects and get all data
 
 ## How to get data of QnA page
 
-Make a get request to localhost:5000/qnaInfo/{ordering}/{page}\
+Make a get request to https://sololearn-api.herokuapp.com/qnaInfo/{ordering}/{page}\
 Again Ordering accepts 
 * Trending 
 * MostRecent
@@ -89,7 +89,7 @@ As always you can iterate through each of the objects and get all data xD
 
 ## How to get data of a QnA thread with all the answers
 
-Make a get request to localhost:5000/qnaInfo/thread/id/{questionId}\
+Make a get request to https://sololearn-api.herokuapp.com/qnaInfo/thread/id/{questionId}\
 You can get the question ID from the data we just fetched of QnA page (Each question has an ID) or simply go to the question, copy the link, get the numeric value and paste it
 
 It will give you following data
