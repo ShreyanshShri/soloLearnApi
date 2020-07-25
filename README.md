@@ -36,8 +36,8 @@ Make a get request to https://sololearn-api.herokuapp.com/codeplayground/{orderi
 Ordering accepts 
 * Trending 
 * MostRecent
-* MostPopular
-If you want to get codes of all the languages, Enter 'All'
+* MostPopular 
+(If you want to get codes of all the languages, Enter 'All')
 
 It will give you following data
 
