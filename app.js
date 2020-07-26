@@ -4,6 +4,7 @@ const cors = require('cors')
 const codeplaygroundRoute =require('./routes/codeplaygound')
 const userInfoRoute = require('./routes/userInfo')
 const qnaInfoRoute = require('./routes/qnaInfo')
+const leaderboardRoute = require('./routes/leaderboard')
 const port = process.env.PORT || 5000;
 
 app.use(cors())
@@ -12,6 +13,7 @@ app.use(express.json({limit:'1mb'}))
 app.use('/userInfo', userInfoRoute)
 app.use('/codeplayground', codeplaygroundRoute)
 app.use('/qnaInfo', qnaInfoRoute)
+app.use('/leaderboard', leaderboardRoute)
 
 app.use((req, res, next)=>{
     res.json({
