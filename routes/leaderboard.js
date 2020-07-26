@@ -28,9 +28,9 @@ router.get('/', (req, mainRes)=>{
                 let allInfo = []
                 $('.item').each((index, ele)=>{
                     let username = $(ele).find('.name').text().trim()
-                    let XPs = $(ele).find('.points').text().trim()
+                    let XPs = $(ele).find('.points').text().trim().replace('\nXP', "")
                     let rank = $(ele).find('.rank').text().trim()
-                    console.log(username,XPs,rank)
+                    // console.log(username,XPs,rank)
                     let thisInfo = {
                         username: username,
                         xp: XPs,
@@ -68,7 +68,7 @@ router.get('/:lang', (req, mainRes)=>{
                 let allInfo = []
                 $('.item').each((index, ele)=>{
                     let username = $(ele).find('.name').text().trim()
-                    let XPs = $(ele).find('.points').text().trim()
+                    let XPs = $(ele).find('.points').text().trim().replace('\nXP', "")
                     let rank = $(ele).find('.rank').text().trim()
                     console.log(username,XPs,rank)
                     let thisInfo = {
