@@ -1,7 +1,7 @@
 # -soloLearnApi
 A SoloLearn API
 
-## A simple API to get the following data: 
+## A simple API to get the following info : 
 
 * Info about a user (Code Bits, skills, level, XP [ followers and following info not avaliable ])
 * List of all codes of code playground for all the pages(trending, most popular, most recent) with likes and author info
@@ -88,7 +88,7 @@ It will return you the following data
     lang: lang
 }]
 ```
-Ad again you can iterate through each of the objects and get data...
+And again you can iterate through each of the objects and get data...
 
 ## How to get data of QnA page
 
@@ -153,8 +153,8 @@ It will give you following data
 }
 ```
 
-Now again you can simply get data about the question but for answers it will send you an array so again you have to iterate thorugh each of the objects on the array and then you can easily get data for each answer.
+Now you can simply get data about the question but for answers it will send you an array so again you have to iterate thorugh each of the objects on the array and then you can easily get data for each answer.
 
 ### Hope you enjoyed... ( This was my first README.md so I dont know how to write it xD, But I tried my best)
 
-## Thank you for reading...
+## Thanks for reading...
