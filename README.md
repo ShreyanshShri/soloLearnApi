@@ -61,7 +61,7 @@ Again you can iterate through each of the code objects and get all data
 
 ## How to get data of Leaderboard
 
-Make a get request to https://sololearn-api.herokuapp.com/leaderboard \
+Make a get request to https://sololearn-api.herokuapp.com/leaderboard <br>
 
 It will return you the following data
 
@@ -74,9 +74,9 @@ It will return you the following data
 ```
 Now you can iterate through each of the objects and get data...
 
-## How to get data of Leaderboard
+## How to get data of Leaderboard with language filter
 
-Make a get request to https://sololearn-api.herokuapp.com/leaderboard \
+Make a get request to https://sololearn-api.herokuapp.com/leaderboard <br>
 
 It will return you the following data
 
