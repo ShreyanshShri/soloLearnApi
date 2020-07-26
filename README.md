@@ -76,7 +76,26 @@ Now you can iterate through each of the objects and get data...
 
 ## How to get data of Leaderboard with language filter
 
-Make a get request to https://sololearn-api.herokuapp.com/leaderboard <br>
+Make a get request to https://sololearn-api.herokuapp.com/leaderboard/{langFilter} <br>
+
+Filters you can use
+* HTML
+* Python
+* CPlusPlus
+* Java
+* JavaScript
+* CSharp
+* C
+* SQL
+* machine-learning
+* data-science
+* PHP 
+* CSS
+* Ruby
+* jQuery
+* fullstack
+* react
+* Swift
 
 It will return you the following data
 
