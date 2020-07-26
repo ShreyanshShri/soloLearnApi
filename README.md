@@ -5,6 +5,7 @@ A SoloLearn API
 
 * Info about a user (Code Bits, skills, level, XP [ followers and following info not avaliable ])
 * List of all codes of code playground for all the pages(trending, most popular, most recent) with likes and author info
+* Leaderboard Info with language filter
 * List of all QNA of QnA page for all the pages(trending, most popular, most recent) with likes and author info
 * All the details of a QnA thread including answers and posted By..
 
@@ -57,6 +58,37 @@ It will give you following data
 ```
 
 Again you can iterate through each of the code objects and get all data
+
+## How to get data of Leaderboard
+
+Make a get request to https://sololearn-api.herokuapp.com/leaderboard \
+
+It will return you the following data
+
+```
+[{
+    username: username,
+    xp: XPs,
+    rank: rank
+}]
+```
+Now you can iterate through each of the objects and get data...
+
+## How to get data of Leaderboard
+
+Make a get request to https://sololearn-api.herokuapp.com/leaderboard \
+
+It will return you the following data
+
+```
+[{
+    username: username,
+    xp: XPs,
+    rank: rank,
+    lang: lang
+}]
+```
+Ad again you can iterate through each of the objects and get data...
 
 ## How to get data of QnA page
 
