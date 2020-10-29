@@ -10,10 +10,10 @@ A SoloLearn API
 * All the details of a QnA thread including answers and posted By..
 
 
-## How to get info about a user
+## Getting info about a user
 
 Make a get request on https://sololearn-api.herokuapp.com/userInfo/{sololearn_id} \
-It will return data in json format...something like this
+It will return you a json object. 
 
 ```
 [{
@@ -29,9 +29,7 @@ It will return data in json format...something like this
 }]
 ```
 
-Now you can iterate through each of the objects of the array and get data.
-
-## How to get data of code playground 
+## Fetching data of code playground 
 
 Make a get request to https://sololearn-api.herokuapp.com/codeplayground/{ordering}/{language}/{page} \
 Ordering accepts 
@@ -40,7 +38,7 @@ Ordering accepts
 * MostPopular 
 (If you want to get codes of all the languages, Enter 'All')
 
-It will give you following data
+It will return an array of objects. 
 
 ```
 [{
@@ -57,13 +55,11 @@ It will give you following data
 }]
 ```
 
-Again you can iterate through each of the code objects and get all data
-
-## How to get data of Leaderboard
+## Fetching data of Leaderboard
 
 Make a get request to https://sololearn-api.herokuapp.com/leaderboard <br>
 
-It will return you the following data
+It will return you the following array
 
 ```
 [{
@@ -72,9 +68,8 @@ It will return you the following data
     rank: rank
 }]
 ```
-Now you can iterate through each of the objects and get data...
 
-## How to get data of Leaderboard with language filter
+## Fetching data of Leaderboard (with language filter) 
 
 Make a get request to https://sololearn-api.herokuapp.com/leaderboard/{langFilter} <br>
 
@@ -107,9 +102,8 @@ It will return you the following data
     lang: lang
 }]
 ```
-And again you can iterate through each of the objects and get data...
 
-## How to get data of QnA page
+## Fetching data of QnA page
 
 Make a get request to https://sololearn-api.herokuapp.com/qnaInfo/{ordering}/{page} \
 Again Ordering accepts 
@@ -117,7 +111,7 @@ Again Ordering accepts
 * MostRecent
 * MostPopular
 
-It will return you following data
+Again it will return an array of objects
 
 ```
 [{
@@ -136,14 +130,12 @@ It will return you following data
 }]
 ```
 
-As always you can iterate through each of the objects and get all data xD
-
-## How to get data of a QnA thread with all the answers
+## Fetching data of a given QnA thread (with all the answers) 
 
 Make a get request to https://sololearn-api.herokuapp.com/qnaInfo/thread/id/{questionId} \
 You can get the question ID from the data we just fetched of QnA page (Each question has an ID) or simply go to the question, copy the link, get the numeric value and paste it
 
-It will give you following data
+This one will return a object with two objects... One for question Info and other is an array of objects for all the answers in that thread... 
 
 ```
   {
@@ -172,8 +164,8 @@ It will give you following data
 }
 ```
 
-Now you can simply get data about the question but for answers it will send you an array so again you have to iterate thorugh each of the objects on the array and then you can easily get data for each answer.
+### And now you are ready to create your own apps with realtime data... 
 
-### Hope you enjoyed... ( This was my first README.md so I dont know how to write it xD, But I tried my best)
+### Hope you enjoyed... ( This was my first README.md so I dont know how to write it xD, But I tried my best to explain everything)
 
-## Thanks for reading...
+## Thanks for reading... 🙃
