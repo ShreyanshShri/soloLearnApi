@@ -15,7 +15,7 @@ A SoloLearn API
 Make a get request on https://sololearn-api.herokuapp.com/userInfo/{sololearn_id} \
 It will return you a json object. 
 
-```
+```javascript
 [{
     userBasicInfo: {
         username: user_name,
@@ -40,7 +40,7 @@ Ordering accepts
 
 It will return an array of objects. 
 
-```
+```javascript
 [{
     codeInfo :{ 
         codeName: code_text,
@@ -61,7 +61,7 @@ Make a get request to https://sololearn-api.herokuapp.com/leaderboard <br>
 
 It will return you the following array
 
-```
+```javascript
 [{
     username: username,
     xp: XPs,
@@ -94,7 +94,7 @@ Filters you can use
 
 It will return you the following data
 
-```
+```javascript
 [{
     username: username,
     xp: XPs,
@@ -113,7 +113,7 @@ Again Ordering accepts
 
 Again it will return an array of objects
 
-```
+```javascript
 [{
     questionInfo: {
         questionId: questionId,
@@ -137,7 +137,7 @@ You can get the question ID from the data we just fetched of QnA page (Each ques
 
 This one will return a object with two objects... One for question Info and other is an array of objects for all the answers in that thread... 
 
-```
+```javascript
   {
   questionInfo: {
       questionDetails: {
